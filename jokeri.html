@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jokeri</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>  
+<script src="underscore-min.js"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<style>
+li{
+    border-left:2px solid black;
+}
+h1,h2,h3,h4,h5,p,span,td,div{
+    color:white;
+}
+@media only screen and (max-width: 900px) {
+
+    body:not(#onlypc){
+        visibility:hidden;
+    }
+    #onlypc{
+    display:block;
+    position: absolute;
+    font-size: 5em;
+    color:red;
+    margin-left:400px;
+    margin-top:400px;
+    z-index: 2;
+    }
+  
+}
+#onlypc{
+    display:none;
+    position: absolute;
+    font-size: 5em;
+    color:red;
+    margin-left:400px;
+    margin-top:400px;
+    z-index: 2;
+}
+input{
+    width:35px;
+}
+body{
+    background-color:#282923;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+td{
+    border-right: 2px solid black;
+}
+#numerot{
+width:360px;
+margin-top:320px;
+margin-left:850px;
+position: absolute;
+transform: scale(1.5);
+}
+
+#calculate{
+    margin-left:870px;
+    margin-top:120px;
+    transform:scale(1.6);
+    position: absolute;
+}
+#replay{
+    margin-left:880px;
+    margin-top:120px;
+    transform:scale(1.6);
+    position: absolute;
+}
+
+#rightnumbers{
+margin-left:700px;
+position: absolute;
+margin-top:470px;
+font-size:2em;
+color:#10FE10;
+}
+#tulostanumerot{
+margin-left:700px;
+position: absolute;
+margin-top:390px;
+font-size:2em;
+color:#10FE10;
+}
+#mymoney{
+    position: absolute;
+    font-size:2em;
+}
+.success{
+    color:#10FE10;
+}
+.myButton {
+    -moz-box-shadow: 3px 4px 0px 0px #8a2a21;
+    -webkit-box-shadow: 3px 4px 0px 0px #8a2a21;
+    box-shadow: 3px 4px 0px 0px #8a2a21;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24437));
+    background:-moz-linear-gradient(top, #c62d1f 5%, #f24437 100%);
+    background:-webkit-linear-gradient(top, #c62d1f 5%, #f24437 100%);
+    background:-o-linear-gradient(top, #c62d1f 5%, #f24437 100%);
+    background:-ms-linear-gradient(top, #c62d1f 5%, #f24437 100%);
+    background:linear-gradient(to bottom, #c62d1f 5%, #f24437 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24437',GradientType=0);
+    background-color:#c62d1f;
+    -moz-border-radius:18px;
+    -webkit-border-radius:18px;
+    border-radius:18px;
+    border:1px solid #d02718;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:7px 25px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #810e05;
+}
+.myButton:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24437), color-stop(1, #c62d1f));
+    background:-moz-linear-gradient(top, #f24437 5%, #c62d1f 100%);
+    background:-webkit-linear-gradient(top, #f24437 5%, #c62d1f 100%);
+    background:-o-linear-gradient(top, #f24437 5%, #c62d1f 100%);
+    background:-ms-linear-gradient(top, #f24437 5%, #c62d1f 100%);
+    background:linear-gradient(to bottom, #f24437 5%, #c62d1f 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24437', endColorstr='#c62d1f',GradientType=0);
+    background-color:#f24437;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+.lottoa {
+    background-color:#44c767;
+    -moz-border-radius:28px;
+    -webkit-border-radius:28px;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    padding:16px 31px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+}
+.lottoa:hover {
+    background-color:#5cbf2a;
+}
+
+.random {
+    -moz-box-shadow:inset 0px 1px 0px 0px #fbafe3;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #fbafe3;
+    box-shadow:inset 0px 1px 0px 0px #fbafe3;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ff5bb0), color-stop(1, #ef027d));
+    background:-moz-linear-gradient(top, #ff5bb0 5%, #ef027d 100%);
+    background:-webkit-linear-gradient(top, #ff5bb0 5%, #ef027d 100%);
+    background:-o-linear-gradient(top, #ff5bb0 5%, #ef027d 100%);
+    background:-ms-linear-gradient(top, #ff5bb0 5%, #ef027d 100%);
+    background:linear-gradient(to bottom, #ff5bb0 5%, #ef027d 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5bb0', endColorstr='#ef027d',GradientType=0);
+    background-color:#ff5bb0;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #ee1eb5;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #c70067;
+}
+.random:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ef027d), color-stop(1, #ff5bb0));
+    background:-moz-linear-gradient(top, #ef027d 5%, #ff5bb0 100%);
+    background:-webkit-linear-gradient(top, #ef027d 5%, #ff5bb0 100%);
+    background:-o-linear-gradient(top, #ef027d 5%, #ff5bb0 100%);
+    background:-ms-linear-gradient(top, #ef027d 5%, #ff5bb0 100%);
+    background:linear-gradient(to bottom, #ef027d 5%, #ff5bb0 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef027d', endColorstr='#ff5bb0',GradientType=0);
+    background-color:#ef027d;
+}
+
+
+.pelaauudestaan {
+    -moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+    box-shadow:inset 0px 1px 0px 0px #fff6af;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
+    background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+    background-color:#ffec64;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #ffaa22;
+    display:inline-block;
+    cursor:pointer;
+    color:#333333;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #ffee66;
+}
+.pelaauudestaan:hover {
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ffec64));
+    background:-moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+    background:-webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+    background:-o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+    background:-ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+    background:linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ffec64',GradientType=0);
+    background-color:#ffab23;
+}
+
+button[disabled]{
+    cursor:not-allowed;
+}
+input[disabled]{
+    cursor:not-allowed;
+}
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+border-bottom: 1px solid black;
+}
+.dropdown-content a:hover {opacity:0.7;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+img[src*="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]{
+   display: none;
+}
+</style>
+<body>
+
+<nav class="navbar navbar-inverse" >
+  <div class="container-fluid">
+    <div class="navbar-header">
+    </div>
+    <ul class="nav navbar-nav">
+      <li style="background-color: red;"><a href="palaute.html" style="color:black;">Report a Bug/Feedback</a></li>
+      <li style="background-color:green;"><a id="pokemonquizpage" style="color:black" href="lotto.html">Lotto</a></li>
+      <li style="background-color:green;"><a id="flagquiz" style="color:black" href="rikunjokeri.html">Riku's jokeri</a></li>
+    </ul>
+    <span style="position: absolute;margin-left:500px;font-size: 3em;color:orange;">JOKERI</span>
+    <div class="dropdown" style="float:right;">
+      <button class="dropbtn" style="width:160px;">Other games</button>
+      <div class="dropdown-content">
+        <a id="flagquiz"  style="color:black;background-color:cyan;" href="flagquiz_finnish.html">Lippupeli</a>
+        <a id="pokemoncarddatabase" style="color:black;background-color:lightgreen;" href="index.php">Pokémon</a>
+        <a id="flagquiz"  style="color:black;background-color:orange;" href="flagquiz.html">Flag Quiz</a>
+        <a id="englishquiz"  style="color:black;background-color:lightblue;" href="englishquiz.html">English Quiz</a>
+        <a id="japanesequiz"  style="color:black;background-color:yellow;" href="hiragana.php">Japanese Quiz</a>
+        <a id="pokemonquizalternate"  style="color:black;background-color:pink;" href="pokemonquizalternate.html">Pokemon Quiz Alternate</a>
+        <a id="flagdragquizfinnish"  style="color:black;background-color:coral;" href="flagdragquizfinnish.html">FlagDragQuiz</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+    <span id="onlypc">THIS SITE IS ONLY FOR PC USERS</span>
+
+    <div id="calculatediv">
+        <div id="disabledcheck" style="margin-left:850px;margin-top:120px;position: absolute;transform:scale(1.6);z-index: 2;width:190px;height:70px;display:none;"></div>
+        <button id="calculate" class="lottoa" disabled>Pelaa jokeri (1€)</button>
+        <button id="replay" class="pelaauudestaan" style="display:none;">Pelaa uudestaan</button>
+    </div>
+    <!--<a href="lotto.html" class="myButton" style="float:right;">Lotto</a>
+    <a href="rikunjokeri.html" class="myButton" style="position: absolute;margin-top:45px;margin-left:1775px;">Rikun jokeri</a>-->
+    <span id="mymoney" style="margin-left:10px;margin-top:0px;">Rahaa tilillä: </span><span id="moremoney" style="color:#10FE10;margin-left:290px;margin-top:0px;font-size: 2em;position: absolute; "></span>
+    <!--<span style="margin-left:545px;margin-top:55px;position:absolute;font-size:2em;">Mahdollisuutesi saada kaikki numerot oikein on <span>1/1 000 000</span></span>-->
+    <div id="arvoluku" style="font-size:3em;margin-left:1100px;"></div>
+    <div id="youwon" style="font-size:3em;margin-left:50px;"></div>
+    <div id="countdown" style="font-size:3em;margin-left:900px;position: absolute;"></div>
+    <div id="error" style="font-size:3em;margin-left:650px;width:800px;position: absolute;margin-top:350px;"></div>
+    <span style='position:absolute;margin-left:400px;margin-top:317px;font-weight:bold;font-size: 1.5em;'>Syötä jokeririvin numerot väliltä 0-9</span>
+    <button style='margin-left:845px;margin-top:222px;font-weight:bold;position: absolute;' id="arvorandom" class="random">Arvo satunnainen jokeririvi</button>
+    <div style="position: absolute;margin-top:600px;margin-left:850px;z-index: 2" id="eivoittoa"></div>
+    <div style="width:300px;height:600px;margin-top:100px;position: absolute;">
+        <span style='font-size:1.5em;margin-left:10px;'>1 Oikein = <span style='color:#CE0405;margin-left:10px;'>0€</span></span><br><br>
+        <span style='font-size:1.5em;margin-left:10px;'>2 Oikein = <span style='color:#10FE10;margin-left:10px;'>3€</span></span><br><br>
+        <span style='font-size:1.5em;margin-left:10px;'>3 Oikein = <span style='color:#10FE10;margin-left:10px;'>6€</span></span><br><br>
+        <span style='font-size:1.5em;margin-left:10px;'>4 Oikein = <span style='color:#10FE10;margin-left:10px;'>50€</span></span><br><br>
+        <span style='font-size:1.5em;margin-left:10px;'>5 Oikein = <span style='color:#10FE10;margin-left:10px;'>500€</span></span><br><br>
+        <span style='font-size:1.5em;margin-left:10px;'>6 Oikein = <span style='color:#10FE10;margin-left:10px;'>20 000€</span></span><br><br>
+        <span style='font-size:1.5em;margin-left:10px;'>7 Oikein = <span style='color:#10FE10;margin-left:10px;'>1 000 000€</span></span>
+    </div>
+    <div id="numerot">
+        <input type="number" id="numero1" min="0"/>
+        <input type="number" id="numero2" min="0"/>
+        <input type="number" id="numero3" min="0"/>
+        <input type="number" id="numero4" min="0"/>
+        <input type="number" id="numero5" min="0"/>
+        <input type="number" id="numero6" min="0"/>
+        <input type="number" id="numero7" min="0"/>
+    </div>    
+    <div id="tulostanumerot">Sinun numerosi:
+        <div id="numbera" style="color:#CE0405;display:inline;border:2px solid black"></div>
+        <div id="numberb" style="color:#CE0405;display:inline;border:2px solid black"></div>
+        <div id="numberc" style="color:#CE0405;display:inline;border:2px solid black"></div>
+        <div id="numberd" style="color:#CE0405;display:inline;border:2px solid black"></div>
+        <div id="numbere" style="color:#CE0405;display:inline;border:2px solid black"></div>
+        <div id="numberf" style="color:#CE0405;display:inline;border:2px solid black"></div>
+        <div id="numberg" style="color:#CE0405;display:inline;border:2px solid black"></div>
+    </div> 
+    <div id="rightnumbers" style="display:none;">Oikeat numerot:
+        <span id="number1" style="border:2px solid black"></span>
+        <span id="number2" style="border:2px solid black"></span>
+        <span id="number3" style="border:2px solid black"></span>
+        <span id="number4" style="border:2px solid black"></span>
+        <span id="number5" style="border:2px solid black"></span>
+        <span id="number6" style="border:2px solid black"></span>
+        <span id="number7" style="border:2px solid black"></span>
+    </div>
+
+    <table style="border:2px solid black;position: absolute;margin-left:1500px;max-height: 880px;overflow: auto;display:block;margin-top:-10px;" id="table">
+
+    </table>   
+<!--<span style="position: absolute;margin-top:400px;width:400px;float:left;">
+    Jokerissa valitset seitsemän numeron numerosarjan numeroista 0 – 9.<br>
+    Riviä tarkistettaessa numero on oikein, jos omassa rivissäsi on samassa kohti sama numero kuin arvotussa rivissä.
+
+</span>-->
+<div id="footer" style="margin:0;bottom:0;width: 100%;background-color: #12391A;height:50px;position: absolute;">
+    <span style='color:white;position: relative;float: left;top: 50%;left: 50%;'>© Riku.
+    </span>
+    <span style='color:white;position: absolute;float: right;bottom: 0;right: 5px;'>Beta Version 0.2
+    </span>
+</div>
+</body>
+<script>
+var colors = ["red", "lightgreen", "lightblue", "yellow", "orange", "cyan", "magenta", "coral", "pink"];
+
+var randomcolor = colors[Math.floor(Math.random() * colors.length)];
+
+$(".dropdown-content").each(function(){
+var randomcolor = colors[Math.floor(Math.random() * colors.length)];
+
+$(this).children().css("background-color",""+ randomcolor +"");
+})
+$(document).ready(function(){
+
+
+         $(":input").css("color", "black");
+    })
+//MAHDOLLISET JOKERIUMEROT
+var number1=["1","2","3","4","5","6","7","8","9"];
+var number2=["1","2","3","4","5","6","7","8","9"];
+var number3=["1","2","3","4","5","6","7","8","9"];
+var number4=["1","2","3","4","5","6","7","8","9"];
+var number5=["1","2","3","4","5","6","7","8","9"];
+var number6=["1","2","3","4","5","6","7","8","9"];
+var number7=["1","2","3","4","5","6","7","8","9"];
+
+var number1sample = _.sample(number1);
+var number2sample = _.sample(number2);
+var number3sample = _.sample(number3);
+var number4sample = _.sample(number4);
+var number5sample = _.sample(number5);
+var number6sample = _.sample(number6);
+var number7sample = _.sample(number7);
+
+var hasclass = $(this).hasClass('success');
+
+var oikein = 0;
+//UUSIPELI
+$("#replay").click(function(){
+$(this).hide();
+$("#calculate").show();
+    $("input").each(function(){
+
+        $(this).prop("disabled", false);
+
+    })
+
+    //$("#arvorandom").prop("disabled", false);
+
+})
+
+var mymoney = Math.floor((Math.random() * 30) + 30);
+
+$("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+
+//ARPOO SATUNNAISET JOKERINUMEROT PUOLESTASI
+$("#arvorandom").click(function(){
+
+    $("#numero1").val(Math.floor((Math.random() * 9) ));
+    $("#numero2").val(Math.floor((Math.random() * 9) ));
+    $("#numero3").val(Math.floor((Math.random() * 9) ));
+    $("#numero4").val(Math.floor((Math.random() * 9) ));
+    $("#numero5").val(Math.floor((Math.random() * 9) ));
+    $("#numero6").val(Math.floor((Math.random() * 9) ));
+    $("#numero7").val(Math.floor((Math.random() * 9) ));
+
+})
+
+$('body').attr('unselectable','on')
+     .css({'-moz-user-select':'-moz-none',
+           '-moz-user-select':'none',
+           '-o-user-select':'none',
+           '-khtml-user-select':'none', /* you could also put this in a class */
+           '-webkit-user-select':'none',/* and add the CSS class here instead */
+           '-ms-user-select':'none',
+           'user-select':'none'
+     }).bind('selectstart', function(){ return false; });
+
+setInterval(function(){
+
+    $("input").keypress(function(evt){
+
+        if (evt.which < 48 || evt.which > 57)
+        {
+            evt.preventDefault();
+        }
+
+    })
+
+
+
+})
+
+
+$(document).ready(function(){
+setInterval(function(){
+
+    if($("#calculate").is(':disabled'))
+    {
+       $("#disabledcheck").show(); 
+    }
+
+    if(!$("#calculate").is(':disabled'))
+    {
+       $("#disabledcheck").hide(); 
+    }
+
+},500)
+    
+ 
+
+})
+   
+
+ $("#disabledcheck").on('mouseover', function(){
+
+        $("#error").show();
+       // $("#error").html("<span style='color:red;font-size:1.5em;'>Täytä kaikki kentät</span>");
+
+ })
+
+  $("#disabledcheck").on('mouseout', function(){
+
+        $("#error").hide();
+
+ })
+
+$("#calculate").click(function(){
+$("#rightnumbers").hide();
+    if(mymoney == 0)
+    {
+        $("calculate").prop('disabled', true);
+         $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>RAHAT LOPPUI</span>");
+
+            setTimeout(function(){
+                $("#eivoittoa").hide();
+                $("#eivoittoa").show();
+                $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Refresh in 5</span>");
+
+            },3000)
+
+            setTimeout(function(){
+                $("#eivoittoa").hide();
+                $("#eivoittoa").show();
+                $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Refresh in 4</span>");
+
+            },4000)
+
+            setTimeout(function(){
+                $("#eivoittoa").hide();
+                $("#eivoittoa").show();
+                $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Refresh in 3</span>");
+
+            },500)
+
+            setTimeout(function(){
+                $("#eivoittoa").hide();
+                $("#eivoittoa").show();
+                $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Refresh in 2</span>");
+
+            },6000)
+
+            setTimeout(function(){
+                $("#eivoittoa").hide();
+                $("#eivoittoa").show();
+                $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Refresh in 1</span>");
+
+            },7000)
+
+            setTimeout(function(){
+
+                location.reload();
+
+            },5999)
+    }
+        
+
+})
+
+    
+
+
+ 
+
+//TARKISTUS YLI LUVULLE 9
+setInterval(function(){
+if($("#numero1").val() > 9)
+        {
+            $("#numero1").val(number1sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }  
+
+    if($("#numero2").val() > 9)
+        {
+            $("#numero2").val(number2sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }    
+
+    if($("#numero3").val() > 9)
+        {
+            $("#numero3").val(number3sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        } 
+    if($("#numero4").val() > 9)
+        {
+            $("#numero4").val(number4sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        } 
+    if($("#numero5").val() > 9)
+        {
+            $("#numero5").val(number5sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }               
+    if($("#numero6").val() > 9)
+        {
+            $("#numero6").val(number6sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        } 
+    if($("#numero7").val() > 9)
+        {
+            $("#numero7").val(number7sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }   
+
+       /* if($("#numero1").val() == $("#numero2").val() || $("#numero1").val() == $("#numero3").val() || $("#numero1").val() == $("#numero4").val() || $("#numero1").val() == $("#numero5").val() || $("#numero1").val() == $("#numero6").val() || $("#numero1").val() == $("#numero7").val())
+        {
+            $("#numero1").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+           // $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }  
+
+        if($("#numero2").val() == $("#numero1").val() || $("#numero2").val() == $("#numero3").val() || $("#numero2").val() == $("#numero4").val() || $("#numero2").val() == $("#numero5").val() || $("#numero2").val() == $("#numero6").val() || $("#numero2").val() == $("#numero7").val())
+        {
+            $("#numero2").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+            //$("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        } 
+
+        if($("#numero3").val() == $("#numero1").val() || $("#numero3").val() == $("#numero2").val() || $("#numero3").val() == $("#numero4").val() || $("#numero3").val() == $("#numero5").val() || $("#numero3").val() == $("#numero6").val() || $("#numero3").val() == $("#numero7").val())
+        {
+            $("#numero3").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+           // $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        } 
+
+         if($("#numero4").val() == $("#numero1").val() || $("#numero4").val() == $("#numero2").val() || $("#numero4").val() == $("#numero3").val() || $("#numero4").val() == $("#numero5").val() || $("#numero4").val() == $("#numero6").val() || $("#numero4").val() == $("#numero7").val())
+        {
+            $("#numero4").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+            //$("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }
+
+        if($("#numero5").val() == $("#numero1").val() || $("#numero5").val() == $("#numero2").val() || $("#numero5").val() == $("#numero3").val() || $("#numero5").val() == $("#numero4").val() || $("#numero5").val() == $("#numero6").val() || $("#numero5").val() == $("#numero7").val())
+        {
+            $("#numero5").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+            //$("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }
+
+        if($("#numero6").val() == $("#numero1").val() || $("#numero6").val() == $("#numero2").val() || $("#numero6").val() == $("#numero3").val() || $("#numero6").val() == $("#numero4").val() || $("#numero6").val() == $("#numero5").val() || $("#numero6").val() == $("#numero7").val())
+        {
+            $("#numero6").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+            //$("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }
+
+        if($("#numero7").val() == $("#numero1").val() || $("#numero7").val() == $("#numero2").val() || $("#numero7").val() == $("#numero3").val() || $("#numero7").val() == $("#numero4").val() || $("#numero7").val() == $("#numero5").val() || $("#numero7").val() == $("#numero6").val())
+        {
+            $("#numero7").val("");
+            $("#error").show();
+            $("#arvorandom").click();
+            //$("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }*/
+
+
+
+}, 100)
+
+//EI VOI PELATA ENNNENKUIN KAIKISSA KENTISSÄ ON LUKU
+setInterval(function(){
+if($("#numero1").val() != "" && $("#numero2").val() != "" && $("#numero3").val() != "" && $("#numero4").val() != "" && $("#numero5").val() != "" && $("#numero6").val() != "" && $("#numero7").val() != "")
+    {
+        $("#calculate").prop("disabled", false);
+    }
+    else
+    {
+        $("#calculate").prop("disabled", true);
+    }
+
+}, 10)
+
+
+//TARKISTUS ITSESYÖTETYLLE LOTTORIVILLE
+$("#numero1, #numero2, #numero3, #numero4, #numero5, #numero6, #numero7").on('blur', function(){
+
+$("#numero1, #numero2, #numero3, #numero4, #numero5, #numero6, #numero7").each(function(){
+
+    
+
+    
+    //TARKISTAA ETTÄ KENTTIIN EI SYÖTETÄ LUKUA JOKA ON YLI 9, JOS NÄIN TAPAHTUU NIIN KENTTÄÄN SYNTYY SATUNNAINEN NUMERO VÄLILTÄ 1-9
+    if($("#numero1").val() > 9)
+        {
+            $("#numero1").val(number1sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }  
+
+    if($("#numero2").val() > 9)
+        {
+            $("#numero2").val(number2sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }    
+
+    if($("#numero3").val() > 9)
+        {
+            $("#numero3").val(number3sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        } 
+    if($("#numero4").val() > 9)
+        {
+            $("#numero4").val(number4sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        } 
+    if($("#numero5").val() > 9)
+        {
+            $("#numero5").val(number5sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }               
+    if($("#numero6").val() > 9)
+        {
+            $("#numero6").val(number6sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        } 
+    if($("#numero7").val() > 9)
+        {
+            $("#numero7").val(number7sample);
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Valitse luku väliltä 1-9</span>");
+             setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+        }   
+
+        //TARKISTAA ETTÄ JOKAISESSA KENTÄSSÄ ON UNIIKKI NUMERO
+        /*if($("#numero1").val() == $("#numero2").val() || $("#numero1").val() == $("#numero3").val() || $("#numero1").val() == $("#numero4").val() || $("#numero1").val() == $("#numero5").val() || $("#numero1").val() == $("#numero6").val() || $("#numero1").val() == $("#numero7").val())
+        {
+            $("#numero1").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }  
+
+        if($("#numero2").val() == $("#numero1").val() || $("#numero2").val() == $("#numero3").val() || $("#numero2").val() == $("#numero4").val() || $("#numero2").val() == $("#numero5").val() || $("#numero2").val() == $("#numero6").val() || $("#numero2").val() == $("#numero7").val())
+        {
+            $("#numero2").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        } 
+
+        if($("#numero3").val() == $("#numero1").val() || $("#numero3").val() == $("#numero2").val() || $("#numero3").val() == $("#numero4").val() || $("#numero3").val() == $("#numero5").val() || $("#numero3").val() == $("#numero6").val() || $("#numero3").val() == $("#numero7").val())
+        {
+            $("#numero3").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        } 
+
+         if($("#numero4").val() == $("#numero1").val() || $("#numero4").val() == $("#numero2").val() || $("#numero4").val() == $("#numero3").val() || $("#numero4").val() == $("#numero5").val() || $("#numero4").val() == $("#numero6").val() || $("#numero4").val() == $("#numero7").val())
+        {
+            $("#numero4").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }
+
+        if($("#numero5").val() == $("#numero1").val() || $("#numero5").val() == $("#numero2").val() || $("#numero5").val() == $("#numero3").val() || $("#numero5").val() == $("#numero4").val() || $("#numero5").val() == $("#numero6").val() || $("#numero5").val() == $("#numero7").val())
+        {
+            $("#numero5").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }
+
+        if($("#numero6").val() == $("#numero1").val() || $("#numero6").val() == $("#numero2").val() || $("#numero6").val() == $("#numero3").val() || $("#numero6").val() == $("#numero4").val() || $("#numero6").val() == $("#numero5").val() || $("#numero6").val() == $("#numero7").val())
+        {
+            $("#numero6").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }
+
+        if($("#numero7").val() == $("#numero1").val() || $("#numero7").val() == $("#numero2").val() || $("#numero7").val() == $("#numero3").val() || $("#numero7").val() == $("#numero4").val() || $("#numero7").val() == $("#numero5").val() || $("#numero7").val() == $("#numero6").val())
+        {
+            $("#numero7").val("");
+            $("#error").show();
+            $("#error").html("<span style='color:#CE0405;'>Luku ei voi olla sama kuin toisessa kentässä</span>");
+            setTimeout(function(){
+
+                $("#error").hide();
+
+            },2000)
+            
+        }*/
+
+})
+
+})
+var lottorivi = 0;
+$("#tulostanumerot").hide();
+$("#calculatediv").on('click change trigger', '#calculate', function(){
+    lottorivi++;
+     $("#eivoittoa").hide();
+$('.myButton').click(function(e) {
+    e.preventDefault();
+    //do other stuff when a click happens
+});
+    oikein = 0;
+$("#tulostanumerot").hide();
+mymoney -= 1;
+$("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+
+//$("#arvorandom").prop('disabled', true);
+    $("input").each(function(){
+
+    //$(this).prop('disabled', true);
+
+})
+$(this).hide();
+
+var number1val = $("#numero1").val();
+var number2val = $("#numero2").val();
+var number3val = $("#numero3").val();
+var number4val = $("#numero4").val();
+var number5val = $("#numero5").val();
+var number6val = $("#numero6").val();
+var number7val = $("#numero7").val();
+
+
+
+var number1sample = Math.floor((Math.random() * number1.length));
+var number2sample = Math.floor((Math.random() * number1.length));
+var number3sample = Math.floor((Math.random() * number1.length));
+var number4sample = Math.floor((Math.random() * number1.length));
+var number5sample = Math.floor((Math.random() * number1.length));
+var number6sample = Math.floor((Math.random() * number1.length));
+var number7sample = Math.floor((Math.random() * number1.length));
+ 
+ $("#tulostanumerot div span").each(function(){
+
+    $(this).removeClass('success');
+
+ })  
+
+ //LASKENTA   
+ setTimeout(function(){
+    $("#countdown").show();
+    $("#countdown").html("3");
+
+
+    }, 1)
+
+ setTimeout(function(){
+
+    $("#countdown").html("2");
+
+
+    }, 1001)
+
+ setTimeout(function(){
+
+    $("#countdown").html("1");
+
+
+    }, 2001)
+
+  setTimeout(function(){
+
+    $("#countdown").hide();
+    $('.myButton').unbind('click');  
+
+    }, 2950)
+
+$("#tulostanumerot #numbera").html('<span style="color:#CE0405;display:inline;">' + number1val + '</span>');
+$("#tulostanumerot #numberb").html('<span style="color:#CE0405;display:inline;">' + number2val + '</span>');
+$("#tulostanumerot #numberc").html('<span style="color:#CE0405;display:inline;">' + number3val + '</span>');
+$("#tulostanumerot #numberd").html('<span style="color:#CE0405;display:inline;">' + number4val + '</span>');
+$("#tulostanumerot #numbere").html('<span style="color:#CE0405;display:inline;">' + number5val + '</span>');
+$("#tulostanumerot #numberf").html('<span style="color:#CE0405;display:inline;">' + number6val + '</span>');
+$("#tulostanumerot #numberg").html('<span style="color:#CE0405;display:inline;">' + number7val + '</span>');
+
+    setTimeout(function(){
+          
+        $("#tulostanumerot").show();
+      //ESTÄÄ ETTÄ OIKEISSA NUMEROISSA EI VOI OLLA KAHTA SAMAA  
+     /* switch(true){
+
+             case number1sample == number2sample:
+             number1sample = Math.floor((Math.random() * 9) + 1);
+             case number1sample == number3sample:
+             number1sample = Math.floor((Math.random() * 9) + 1);
+             case number1sample == number4sample:
+             number1sample = Math.floor((Math.random() * 9) + 1);
+             case number1sample == number5sample:
+             number1sample = Math.floor((Math.random() * 9) + 1);
+             case number1sample == number6sample:
+             number1sample = Math.floor((Math.random() * 9) + 1);
+             case number1sample == number7sample:
+             number1sample = Math.floor((Math.random() * 9) + 1);
+        }
+
+        switch(true){
+             case number2sample == number1sample:
+             number2sample = Math.floor((Math.random() * 9) + 1);
+             case number2sample == number3sample:
+             number2sample = Math.floor((Math.random() * 9) + 1);
+             case number2sample == number4sample:
+             number2sample = Math.floor((Math.random() * 9) + 1);
+             case number2sample == number5sample:
+             number2sample = Math.floor((Math.random() * 9) + 1);
+             case number2sample == number6sample:
+             number2sample = Math.floor((Math.random() * 9) + 1);
+             case number2sample == number7sample:
+             number2sample = Math.floor((Math.random() * 9) + 1);
+        }
+
+         switch(true){
+             case number3sample == number1sample:
+             number3sample = Math.floor((Math.random() * 9) + 1);
+             case number3sample == number2sample:
+             number3sample = Math.floor((Math.random() * 9) + 1);
+             case number3sample == number4sample:
+             number3sample = Math.floor((Math.random() * 9) + 1);
+             case number3sample == number5sample:
+             number3sample = Math.floor((Math.random() * 9) + 1);
+             case number3sample == number6sample:
+             number3sample = Math.floor((Math.random() * 9) + 1);
+             case number3sample == number7sample:
+             number3sample = Math.floor((Math.random() * 9) + 1);
+        }
+
+        switch(true){
+             case number4sample == number1sample:
+             number4sample = Math.floor((Math.random() * 9) + 1);
+             case number4sample == number2sample:
+             number4sample = Math.floor((Math.random() * 9) + 1);
+             case number4sample == number3sample:
+             number4sample = Math.floor((Math.random() * 9) + 1);
+             case number4sample == number5sample:
+             number4sample = Math.floor((Math.random() * 9) + 1);
+             case number4sample == number6sample:
+             number4sample = Math.floor((Math.random() * 9) + 1);
+             case number4sample == number7sample:
+             number4sample = Math.floor((Math.random() * 9) + 1);
+        }
+
+        switch(true){
+             case number5sample == number1sample:
+             number5sample = Math.floor((Math.random() * 9) + 1);
+             case number5sample == number2sample:
+             number5sample = Math.floor((Math.random() * 9) + 1);
+             case number5sample == number3sample:
+             number5sample = Math.floor((Math.random() * 9) + 1);
+             case number5sample == number4sample:
+             number5sample = Math.floor((Math.random() * 9) + 1);
+             case number5sample == number6sample:
+             number5sample = Math.floor((Math.random() * 9) + 1);
+             case number5sample == number7sample:
+             number5sample = Math.floor((Math.random() * 9) + 1);
+        }
+
+        switch(true){
+             case number6sample == number1sample:
+             number6sample = Math.floor((Math.random() * 9) + 1);
+             case number6sample == number2sample:
+             number6sample = Math.floor((Math.random() * 9) + 1);
+             case number6sample == number3sample:
+             number6sample = Math.floor((Math.random() * 9) + 1);
+             case number6sample == number4sample:
+             number6sample = Math.floor((Math.random() * 9) + 1);
+             case number6sample == number5sample:
+             number6sample = Math.floor((Math.random() * 9) + 1);
+             case number6sample == number7sample:
+             number6sample = Math.floor((Math.random() * 9) + 1);
+        }
+
+        switch(true){
+             case number7sample == number1sample:
+             number7sample = Math.floor((Math.random() * 9) + 1);
+             case number7sample == number2sample:
+             number7sample = Math.floor((Math.random() * 9) + 1);
+             case number7sample == number3sample:
+             number7sample = Math.floor((Math.random() * 9) + 1);
+             case number7sample == number4sample:
+             number7sample = Math.floor((Math.random() * 9) + 1);
+             case number7sample == number5sample:
+             number7sample = Math.floor((Math.random() * 9) + 1);
+             case number7sample == number6sample:
+             number7sample = Math.floor((Math.random() * 9) + 1);
+        }
+       */
+
+    $("#rightnumbers #number1").html(number1sample);
+    $("#rightnumbers #number2").html(number2sample);
+    $("#rightnumbers #number3").html(number3sample);
+    $("#rightnumbers #number4").html(number4sample);
+    $("#rightnumbers #number5").html(number5sample);
+    $("#rightnumbers #number6").html(number6sample);
+    $("#rightnumbers #number7").html(number7sample);
+
+     
+
+
+       
+        //TARKISTAA, ETTÄ JOS NUMEROISSA ON JOKU OIKEISTA NUMEROISTA, VÄRJÄÄ NUMERON VIHREÄLLÄ
+        switch(true){
+             case number1val == number1sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").toggleClass('success');
+             break;
+            /* case number1val == number2sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").addClass('success');
+             break;
+             case number1val == number3sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").addClass('success');
+             break;
+             case number1val == number4sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").addClass('success');
+             break;
+             case number1val == number5sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").addClass('success');
+             break;
+             case number1val == number6sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").addClass('success');
+             break;
+             case number1val == number7sample:
+             $("#tulostanumerot #numbera span").css('color', "#10FE10");
+             $("#tulostanumerot #numbera span").addClass('success');
+             break;*/
+        }
+       
+    
+
+            //Check number2
+            switch(true){
+            /* case number2val == number1sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").addClass('success');
+             break;*/
+             case number2val == number2sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").toggleClass('success');
+             break;
+            /* case number2val == number3sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").addClass('success');
+             break;
+             case number2val == number4sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").addClass('success');
+             break;
+             case number2val == number5sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").addClass('success');
+             break;
+             case number2val == number6sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").addClass('success');
+             break;
+             case number2val == number7sample:
+             $("#tulostanumerot #numberb span").css('color', "#10FE10");
+             $("#tulostanumerot #numberb span").addClass('success');
+             break;*/
+        }
+
+
+
+                //Check number3
+                switch(true){
+
+                /* case number3val == number1sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").addClass('success');
+                 break;
+
+                 case number3val == number2sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").addClass('success');
+                 break;*/
+
+                 case number3val == number3sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").toggleClass('success');
+                 break;
+
+                /* case number3val == number4sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").addClass('success');
+                 break;
+
+                 case number3val == number5sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").addClass('success');
+                 break;
+
+                 case number3val == number6sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").addClass('success');
+                 break;
+
+                 case number3val == number7sample:
+                 $("#tulostanumerot #numberc span").css('color', "#10FE10");
+                 $("#tulostanumerot #numberc span").addClass('success');
+                 break;*/
+            }
+
+
+                    //Check number4
+                    switch(true){
+                    /* case number4val == number1sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").addClass('success');
+                     break;
+                     case number4val == number2sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").addClass('success');
+                     break;
+                     case number4val == number3sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").addClass('success');
+                     break;*/
+                     case number4val == number4sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").toggleClass('success');
+                     break;
+                    /* case number4val == number5sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").addClass('success');
+                     break;
+                     case number4val == number6sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").addClass('success');
+                     break;
+                     case number4val == number7sample:
+                     $("#tulostanumerot #numberd span").css('color', "#10FE10");
+                     $("#tulostanumerot #numberd span").addClass('success');
+                     break;*/
+                }
+
+
+
+                        //Check number5
+                       switch(true){
+                         /*case number5val ==number1sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").addClass('success');
+                         break;
+                         case number5val == number2sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").addClass('success');
+                         break;
+                         case number5val == number3sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").addClass('success');
+                         break;
+                         case number5val == number4sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").addClass('success');
+                         break;*/
+                         case number5val == number5sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").toggleClass('success');
+                        /* break;
+                         case number5val == number6sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").addClass('success');
+                         break;
+                         case number5val == number7sample:
+                         $("#tulostanumerot #numbere span").css('color', "#10FE10");
+                         $("#tulostanumerot #numbere span").addClass('success');
+                         break;*/
+                    }
+
+
+
+
+                            //Check number6
+                            switch(true){
+                            /* case number6val == number1sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").addClass('success');
+                             break;
+                             case number6val == number2sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").addClass('success');
+                             break;
+                             case number6val == number3sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").addClass('success');
+                             break;
+                             case number6val == number4sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").addClass('success');
+                             break;
+                             case number6val == number5sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").addClass('success');
+                             break;*/
+                             case number6val == number6sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").toggleClass('success');
+                             break;
+                            /* case number6val == number7sample:
+                             $("#tulostanumerot #numberf span").css('color', "#10FE10");
+                             $("#tulostanumerot #numberf span").addClass('success');
+                             break;*/
+                        }
+
+
+
+
+                                //Check number7
+                               switch(true){
+                                /* case number7val ==number1sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").addClass('success');
+                                 break;
+                                 case number7val == number2sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").addClass('success');
+                                 break;
+                                 case number7val == number3sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").addClass('success');
+                                 break;
+                                 case number7val == number4sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").addClass('success');
+                                 break;
+                                 case number7val == number5sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").addClass('success');
+                                 break;
+                                 case number7val == number6sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").addClass('success');
+                                 break;*/
+                                 case number7val == number7sample:
+                                 $("#tulostanumerot #numberg span").css('color', "#10FE10");
+                                 $("#tulostanumerot #numberg span").toggleClass('success');
+                                 break;
+                            }
+
+                             $("#eivoittoa").show();
+
+                                oikein = 0;
+                                
+                                if($('#tulostanumerot #numbera span').hasClass('success'))
+                               {
+                                    oikein++;   
+                               }
+
+                                if($('#tulostanumerot #numberb span').hasClass('success'))
+                                {
+                                    oikein++;         
+                                }
+
+                                if($('#tulostanumerot #numberc span').hasClass('success'))
+                                {
+                                    oikein++
+                                }
+
+                                if($('#tulostanumerot #numberd span').hasClass('success'))
+                                {
+                                    oikein++    
+                                }
+
+                                if($('#tulostanumerot #numbere span').hasClass('success'))
+                                {
+                                    oikein++;
+                                }
+
+                                if($('#tulostanumerot #numberf span').hasClass('success'))
+                                {
+                                    oikein++;
+                                }
+
+                                if($('#tulostanumerot #numberg span').hasClass('success'))
+                                {
+                                    oikein++;
+                                }
+
+                                if(oikein == 0)
+                                {
+                                    //console.log(oikein);
+                                    $("#eivoittoa").html("<span style='color:#CE0405;font-size:2.5em;'>Ei voittoa; </span><span style='color:#CE0405;font-size:2.1em;'>" + oikein + " Oikein</span>");
+                                    $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#CE0405;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>");  
+                                }
+                                if(oikein == 1)
+                                {
+                              
+                                    //console.log(oikein);
+                                    $("#eivoittoa").html("<span style='color:#CE0405;font-size:2.5em;'>Ei voittoa; </span><span style='color:#10FE10;;font-size:2.1em;'>" + oikein + " Oikein</span>");
+                                    $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+                                if(oikein == 2)
+                                {
+                                    console.log(oikein)
+                                        mymoney += 3;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 3€");
+                                        $("#moremoney").fadeOut(1300);
+                                        $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Voitit: </span><span style='color:#10FE10;;font-size:2.1em;'>3€</span>");
+                                        $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+                                if(oikein == 3)
+                                {
+                                    console.log(oikein)
+                                        mymoney += 6;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 6€");
+                                        $("#moremoney").fadeOut(1300);
+                                        $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Voitit: </span><span style='color:#10FE10;;font-size:2.1em;'>6€</span>");
+                                        $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+                                if(oikein == 4)
+                                {
+                                    console.log(oikein)
+                                        mymoney = mymoney + 50;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 50€");
+                                        $("#moremoney").fadeOut(1300);
+                                        $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Voitit: </span><span style='color:#10FE10;;font-size:2.1em;'>50€</span>");
+                                        $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+                                if(oikein == 5)
+                                {
+                                    console.log(oikein)
+                                        mymoney += 500;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 500€");
+                                        $("#moremoney").fadeOut(1300); 
+                                        $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Voitit: </span><span style='color:#10FE10;;font-size:2.1em;'>500€</span>");
+                                        $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+                                if(oikein == 6)
+                                {
+                                    console.log(oikein)
+                                        mymoney += 20000;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 20 000€");
+                                        $("#moremoney").fadeOut(1300);
+                                        $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Voitit: </span><span style='color:#10FE10;;font-size:2.1em;'>20 000€</span>");
+                                        $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+                                if(oikein == 7)
+                                {
+                                    console.log(oikein)
+                                        mymoney += 1000000;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 1 000 000€");
+                                        $("#moremoney").fadeOut(1300);
+                                        $("#eivoittoa").html("<span style='color:#10FE10;font-size:2.5em;'>Voitit; </span><span style='color:#10FE10;;font-size:2.1em;'>1 000 000€ GG</span>");
+                                        $("#table").append("<tr><th style='color:yellow;font-size:1.5em'>Jokeririvi&nbsp;</th><td style='font-size:1.5em'>" + lottorivi + "</td>.<th style='color:yellow;font-size:1.5em'>Oikein</th><td style='color:#10FE10;font-size:1.5em;'>&nbsp;" + oikein + "</td></tr>"); 
+                                }
+
+
+
+                             
+                                             
+                                        
+                                   
+
+/* switch(oikein)
+                                {
+                                    case 0:
+                                       
+                                        $("#eivoittoa").html("<span style='color:#CE0405;font-size:2.5em;'>Ei voittoa; </span><span style='color:#CE0405;font-size:2.1em;'>" + oikein + " Oikein</span>");
+                                   
+                                    break;
+
+                                    case 1:
+                                       
+                                        $("#eivoittoa").html("<span style='color:#CE0405;font-size:2.5em;'>Ei voittoa; </span><span style='color:green;font-size:2.1em;'>" + oikein + " Oikein</span>");
+                                   
+                                    break;
+
+                                    case 2:
+                                        console.log(oikein)
+                                        mymoney = mymoney + 3;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 3€");
+                                        $("#moremoney").fadeOut(1300);
+                                      
+                                    break;
+
+                                    case 3:
+                                        console.log(oikein)
+                                        mymoney = mymoney + 6;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 6€");
+                                        $("#moremoney").fadeOut(1300);
+                                         
+                                    break;
+
+                                    case 4:
+                                        console.log(oikein)
+                                        mymoney = mymoney + 50;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 50€");
+                                        $("#moremoney").fadeOut(1300);
+                                    break;
+
+                                    case 5:
+                                        mymoney += 500;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 500€");
+                                        $("#moremoney").fadeOut(1300);
+                                    break;
+
+                                    case 6:
+                                        mymoney += 20000;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 20 000€");
+                                        $("#moremoney").fadeOut(1300);
+                                    break;
+
+                                    case 7:
+                                        mymoney += 3;
+                                        $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                        $("#moremoney").html("+ 1 000 000€");
+                                        $("#moremoney").fadeOut(1300);
+                                    break;*/
+                                
+
+
+                               /*if($(this).hasClass('success'))
+                               {
+                                    oikein ++;
+                              
+                                    //console.log(oikein);
+                                    $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                               }
+                               if(oikein == 2)
+                               {
+                                mymoney += 3;
+                            
+                                $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                $("#moremoney").html("+ 3€");
+                                $("#moremoney").fadeOut(1300);
+                               }
+                               if(oikein == 3)
+                               {
+                                mymoney += 6;
+                            
+                                $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                $("#moremoney").html("+ 6€");
+                                $("#moremoney").fadeOut(1300);
+                               }
+
+                               if(oikein == 4)
+                               {
+                                mymoney += 50;
+                               
+                                $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                $("#moremoney").html("+ 50€");
+                                $("#moremoney").fadeOut(1300);
+                               }
+
+                               if(oikein == 5)
+                               {
+                                mymoney += 500;
+                      
+                                $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                $("#moremoney").html("+ 500€");
+                                $("#moremoney").fadeOut(1300);
+                               }
+
+                               if(oikein == 6)
+                               {
+                                mymoney += 20000;
+
+                                $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                $("#moremoney").html("+ 20 000€");
+                                $("#moremoney").fadeOut(1300);
+                               }
+
+                               if(oikein == 7)
+                               {
+                                mymoney += 1000000;
+                                $("#mymoney").html("Rahaa tilillä: <span style='color:#10FE10;'>" + mymoney + " €</span>");
+                                $("#moremoney").html("+ 1 000 000€ YOU ARE THE WINNER");
+                                $("#moremoney").fadeOut(1300);
+                               }*/
+
+             $("#rightnumbers").show();               
+//UUSIPELI NAPPI
+$("#calculate").show();
+    }, 3000)
+    
+    
+
+})
+
+$('body').find('img[src$="https://cdn.rawgit.com/000webhost/logo/e9bd13f7/footer-powered-by-000webhost-white2.png"]').remove();
+
+</script>
+
+</html>
